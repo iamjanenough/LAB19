@@ -1,3 +1,4 @@
+
 #include<iostream>
 #include<string>
 #include<ctime>
@@ -68,6 +69,56 @@ void Unit::newTurn(){
 /////////////////////////////////////////////////////////////////////////////////////
 //Write function members isDead(), guard(), heal(), beAttacked(), and attack() here//
 /////////////////////////////////////////////////////////////////////////////////////
+
+
+int Unit::heal(){
+    int heal = rand()%21+10;
+    if(hp >= hpmax){
+        heal = 0;
+    }
+
+    hp += heal;
+
+    if(hp > hpmax){
+        heal = hpmax - (hp - heal);
+        hp = hpmax;
+    }
+
+    return heal;
+}
+
+bool Unit::isDead(){
+    if(hp<=0){
+        return true;
+    } else{
+        return false;
+    }
+}
+
+void Unit::guard(){
+    guard_on = true;
+}
+
+int Unit::beAttacked(int oppoatk){
+    int Damage = 0;
+    if(guard_on){
+        Damage = (oppoatk - def)/3;
+    } else {
+        Damage = oppoatk - def;
+    }
+
+    if(Damage < 0) {
+        Damage = 0;
+    }
+
+    hp -= Damage;
+    return Damage;
+}
+
+int Unit::attack(Unit &oppo){
+    return oppo.beAttacked(atk);
+}
+
 
 
 
